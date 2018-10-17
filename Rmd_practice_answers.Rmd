@@ -1,5 +1,5 @@
 ---
-title: "Rmd Practice"
+title: "Rmd Practice (Answers)"
 author: "Ryan Safner"
 date: ""
 output: html_document
@@ -27,6 +27,9 @@ This is data I downloaded and cleaned up from the [Fraser Institute's Economic F
 
 ***
 
+```{r}
+econfreedom<-read.csv("econfreedom.csv") # this is saved in the same folder in this repository 
+```
 
 ***
 
@@ -34,13 +37,21 @@ This is data I downloaded and cleaned up from the [Fraser Institute's Economic F
 
 ***
 
-
+```{r}
+str(econfreedom)
+head(econfreedom)
+```
 ***
 
 ### 3. Get summary statistics of `ef` and `gdp`. 
 
 ***
 
+```{r}
+summary(econfreedom$ef)
+
+summary(econfreedom$gdp)
+```
 
 ***
 
@@ -54,6 +65,10 @@ If you want to see the output in a format you can understand right away, set `ty
 
 ***
 
+```{r, results='asis'}
+library("stargazer")
+stargazer(econfreedom, type="html")
+```
 
 ***
 
@@ -63,17 +78,70 @@ Try changing the chunk options to modify `fig.height` and `fig.width`.
 
 ***
 
+```{r}
+library("ggplot2")
+library("ggthemes")
+ef.hist<-ggplot(data=econfreedom, aes(x=ef))+
+  geom_histogram(breaks=seq(0,10,1),color="black",fill="indianred")+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Index Score")+ylab("Number of Countries")+theme_economist()
+
+ef.hist
+```
+
+```{R}
+gdp.hist<-ggplot(data=econfreedom, aes(x=gdp))+
+  geom_histogram(breaks=seq(0,100000,10000),color="black",fill="indianred")+
+  scale_x_continuous(breaks=seq(0,100000,10000),labels=scales::dollar)+xlab("Economic Freedom Index Score")+ylab("Number of Countries")+theme_fivethirtyeight()
+gdp.hist
+```
+
 ***
 
 ### 6. Now make a boxplot of `ef` and of `gdp` by `continent`. 
 
-***
+```{r}
+ef.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=ef,fill=continent))+
+  geom_boxplot()+
+  scale_y_continuous(breaks=seq(0,10,1))+
+  xlab("Continent")+ylab("Economic Freedom Score")+theme_economist()
 
-***
+ef.hist.cont
+```
+
+```{r}
+gdp.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=gdp,fill=continent))+
+  geom_boxplot()+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  xlab("Continent")+ylab("GDP Per Capita")+theme_economist()
+gdp.hist.cont
+```
 
 ### 7. Now let's consider the possible association between economic freedom ($X$) and GDP per capita ($Y$). Plot two scatterplots: one of all the data points, and one by continent (try coloring by conteninent, and then try by faceting). 
 
 ***
+
+```{r}
+scatter<-ggplot(data=econfreedom,aes(x=ef,y=gdp))+
+  geom_point()+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  ylab("GDP Per Capita")+theme_light()
+scatter 
+```
+
+```{r}
+scatter.cont<-ggplot(data=econfreedom,aes(x=ef,y=gdp, color=continent))+
+  geom_point()+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  ylab("GDP Per Capita")+theme_light()
+scatter.cont 
+```
+
+```{r}
+scatter.facet<-scatter.cont+facet_grid(cols=vars(continent))
+scatter.facet
+```
 
 ***
 
@@ -91,7 +159,21 @@ Take a moment to look at the $\LaTeX{}$ math code I used to generate that equati
 
 Write out the regression equation. 
 
+```{r}
+reg<-lm(gdp~ef, data=econfreedom)
+summary(reg)
+```
+
 ***
+
+- $\hat{\beta_0}=-86400$
+- $SE(\hat{\beta_0})=13362$
+- $\hat{\beta_1}=14704$
+- $SE(\hat{\beta_1})=1935$
+- $R^2=0.3442$
+- $SER=15880$
+
+$$\widehat{gdp_i}=-86400+13362ef_i$$
 
 ***
 
@@ -101,11 +183,39 @@ I mostly intend for you to do this manually, interpretting the output of the reg
 
 ***
 
+- $H_0: \beta_1=0$
+- $H_1: \beta_1 \neq 0$ 
+
+The test statistic is 
+
+$$t=\frac{\hat{\beta_1}-H_0}{SE(\hat{\beta_1})}=\frac{14704-0}{1935} \approx 7.599$$
+
+This is a quite large test statistic. `R` tells us the p-value is 1.06e-11, i.e. 0.00000000000106. 
+
+We can confirm with
+
+```{r}
+2*pt(7.599,df=110, lower.tail=FALSE) # probability of everything to the right of t=7.599
+# with 110 df (remember, it's n-k-1 df = 112-1-1=110)
+# times two, for a two-sided alternative 
+```
+
+
+```{r}
+library("lmtest")
+coeftest(reg)
+```
+
 ***
 
 ### 10. Publish your regression output table with `stargazer`. 
 
 ***
+
+```{r, results='asis'}
+library("stargazer")
+stargazer(reg, type="html")
+```
 
 ***
 
@@ -113,11 +223,29 @@ I mostly intend for you to do this manually, interpretting the output of the reg
 
 ***
 
+```{r}
+europe<-subset(econfreedom,continent=="Europe")
+
+euroscatter<-ggplot(data=econfreedom,aes(x=ef,y=gdp))+
+  geom_point()+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  ylab("GDP Per Capita")+theme_light()
+euroscatter 
+```
+
+```{r}
+eureg<-lm(gdp~ef,data=europe)
+summary(eureg)
+```
 
 ***
 
 ### 12. Create a new regression table with both of your regressions.  
 
 ***
+```{r, results="asis"}
+stargazer(reg,eureg, type="html")
+```
 
 ***
