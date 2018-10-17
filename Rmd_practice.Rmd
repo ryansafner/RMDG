@@ -1,0 +1,212 @@
+---
+title: "Rmd Practice"
+author: "Ryan Safner"
+date: ""
+output: html_document
+---
+
+This is an `Rmd` notebook. Notice the syntax highlighting shows when you modify text or insert code, for example: **bold**, *italic*, and `code`. Edit the `YAML` header (above the `---`) to change the metadata like the `title`, `author`, and `date` to suit your purposes. 
+
+For each question, insert your answers between the triple asterisks `***` that create horizontal lines separating my questions from your answers. Remember, you can insert `R` chunks with the following format:
+
+```{r}
+# your code goes here 
+```
+
+Notice in the `.Rmd` file you can run just that "chunk" of code with the green play button. You can run all previous chunks in with the middle button. There are options you can set on each chunk, but they're not very important now. 
+
+When you are ready, `knit` to `html` by clicking the **Knit** button at the top of the editor and it will compile the plain text and raw code into a lovely webpage.  
+
+# Data 
+
+### 1. Load the `econfreedom` dataset from Blackboard $\rightarrow$ data. 
+
+This is data I downloaded and cleaned up from the [Fraser Institute's Economic Freedom Index](https://www.fraserinstitute.org/economic-freedom/dataset) and the [World Bank's World Development Indicators](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD), both great datasets. This data is in `.csv` format, so you can just download it somewhere and tell `R` to load it from the downloaded location with `df<-read.csv("/path/to/file.csv")` and save it to some dataframe object.
+
+`ef` is a country's (2014) overall Economic Freedom Index score from 0 (least free)-10 (most free). `gdp` is the country's (2014) GDP per capita in USD. 
+
+***
+
+```{r}
+econfreedom<-read.csv("econfreedom.csv") # this is saved in the same folder in this repository 
+```
+
+***
+
+### 2. Look at the structure of the dataframe and print the first few rows. 
+
+***
+
+```{r}
+str(econfreedom)
+head(econfreedom)
+```
+***
+
+### 3. Get summary statistics of `ef` and `gdp`. 
+
+***
+
+```{r}
+summary(econfreedom$ef)
+
+summary(econfreedom$gdp)
+```
+
+***
+
+### 4. Enough manual labor, let's crank up the automation. 
+
+Use `stargazer` to print a nice table of summary statistics for us automatically with `stargazer(data=mydf,type="html")`, where `mydf` is the name of your dataframe object. We can use `stargazer` both for regression tables (when your data object is a regression object) and for summary statistics tables (when it's just a dataframe). 
+
+Edit the top of your `R` chunk to: `{r, results="asis"}`. This tells `R` to print the output of the chunk in the raw format `stargazer` creates, which we just set to `html`. This will look like a jumble of code until we `knit` the whole document into `html`, at which point it will be beautiful. Trust me. 
+
+If you want to see the output in a format you can understand right away, set `type="text"` in `stargazer`. 
+
+***
+
+```{r, results='asis'}
+library("stargazer")
+stargazer(econfreedom, type="html")
+```
+
+***
+
+### 5. Load `ggplot2` and make a histogram of `ef` and of `gdp`. 
+
+Try changing the chunk options to modify `fig.height` and `fig.width`. 
+
+***
+
+```{r}
+library("ggplot2")
+library("ggthemes")
+ef.hist<-ggplot(data=econfreedom, aes(x=ef))+
+  geom_histogram(breaks=seq(0,10,1),color="black",fill="indianred")+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Index Score")+ylab("Number of Countries")+theme_economist()
+
+ef.hist
+```
+
+```{R}
+gdp.hist<-ggplot(data=econfreedom, aes(x=gdp))+
+  geom_histogram(breaks=seq(0,100000,10000),color="black",fill="indianred")+
+  scale_x_continuous(breaks=seq(0,100000,10000),labels=scales::dollar)+xlab("Economic Freedom Index Score")+ylab("Number of Countries")+theme_fivethirtyeight()
+gdp.hist
+```
+
+***
+
+### 6. Now make a boxplot of `ef` and of `gdp` by `continent`. 
+
+```{r}
+ef.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=ef,fill=continent))+
+  geom_boxplot()+
+  scale_y_continuous(breaks=seq(0,10,1))+
+  xlab("Continent")+ylab("Economic Freedom Score")+theme_economist()
+
+ef.hist.cont
+```
+
+```{r}
+gdp.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=gdp,fill=continent))+
+  geom_boxplot()+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  xlab("Continent")+ylab("GDP Per Capita")+theme_economist()
+gdp.hist.cont
+```
+
+### 7. Now let's consider the possible association between economic freedom ($X$) and GDP per capita ($Y$). Plot two scatterplots: one of all the data points, and one by continent. 
+
+***
+
+```{r}
+scatter<-ggplot(data=econfreedom,aes(x=ef,y=gdp))+
+  geom_point()+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  ylab("GDP Per Capita")+theme_light()
+scatter 
+```
+
+```{r}
+scatter.cont<-ggplot(data=econfreedom,aes(x=ef,y=gdp, color=continent))+
+  geom_point()+
+  scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
+  scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
+  ylab("GDP Per Capita")+theme_light()
+scatter.cont 
+```
+
+```{r}
+scatter.facet<-scatter.cont+facet_grid(cols=vars(continent))
+scatter.facet
+```
+
+***
+
+### 8. Now let's start considering whether higher economic freedom causes higher GDP per capita with the following simple model: 
+
+$$\widehat{gdp_i}=\hat{\beta_0}+\hat{\beta_1}ef_i$$
+Take a moment to look at the $\LaTeX{}$ math code I used to generate that equation. Run the regression in `R` and get a `summary()` of it. What are:
+
+- $\hat{\beta_0}$
+- $SE(\hat{\beta_0})$
+- $\hat{\beta_1}$
+- $SE(\hat{\beta_1})$
+- $R^2$
+- $SER$
+
+Write out the regression equation. 
+
+```{r}
+reg<-lm(gdp~ef, data=econfreedom)
+summary(reg)
+```
+
+***
+
+- $\hat{\beta_0}=-86400$
+- $SE(\hat{\beta_0})=13362$
+- $\hat{\beta_1}=14704$
+- $SE(\hat{\beta_1})=1935$
+- $R^2=0.3442$
+- $SER=15880$
+
+$$\widehat{gdp_i}=-86400+13362ef_i$$
+
+***
+
+### 9. Test whether there is any relationship between `ef` and `gdp`. 
+
+I mostly intend for you to do this manually, interpretting the output of the regression in \#8. However, you can also do this with the `lmtest` package's `coeftest()` command, and your regression object in the parentheses. 
+
+***
+
+- $H_0: \beta_1=0$
+- $H_1: \beta_1 \neq 0$ 
+
+The test statistic is 
+
+$$t=\frac{\hat{\beta_1}-H_0}{SE(\hat{\beta_1})}=\frac{14704-0}{1935} \approx 7.599$$
+
+This is a quite large test statistic. `R` tells us the p-value is 1.06e-11, i.e. 0.00000000000106. 
+
+We can confirm with
+
+```{r}
+2*pt(7.599,df=110, lower.tail=FALSE) # probability of everything to the right of t=7.599
+# with 110 df (remember, it's n-k-1 df = 112-1-1=110)
+# times two, for a two-sided alternative 
+```
+
+
+```{r}
+library("lmtest")
+coeftest(reg)
+```
+
+***
+
+
+### 9. Europe seems to have the greatest variation. 

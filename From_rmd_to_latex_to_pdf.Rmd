@@ -1,0 +1,145 @@
+---
+title: "Understanding Rmd -> Latex -> PDF "
+author: ""
+date: ""
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Raw `Rmd`
+
+```
+
+# Section Heading 
+
+## Subsection Heading
+
+This is normal text in a paragraph. This text is **bold**, and this text is in *italics*. 
+
+Here is more text. Let's also make a list
+
+- First item
+- Second item
+
+This time let's make the list numbered instead of bullet points:
+
+1. First item
+2. Second item 
+
+The best use of $\LaTeX{}$ is for math. We can make really fancy equations, that center on the
+page with: 
+
+$$\hat{\beta_1}=\frac{\displaystyle\sum^n_{i=1}(X_i-\bar{X})(Y_i-\bar{Y})}
+{\displaystyle\sum^n_{i=1}(X_i-\bar{X})^2}$$
+
+We can also put math into the same line as text with dollar signs $\frac{2}{3} \times \pi^2$. 
+
+Latex also is useful for creating tables and figures, both are called "float" environments
+that must be initiated with a "\\begin{floattype}" and ended with a "\\end{floattype}", e.g.: 
+
+\begin{table}[h!] % h! places the table here in the doc, instead of where latex optimizes the location
+  \centering % you often want your table in the center of the document
+  \begin{tabular}{lcr} %to create three columns, the first left-aligned (l), the second center-aligned (c), the third right aligned (r)\\ % all lines must end with \\
+  Left & Center & Right \\ \hline % hline creates a horizontal line 
+  Example 1 & Example 2 & Example 3\\
+  44 & 66 & 88 \\ \hline 
+  \end{tabular}
+\end{table}
+
+```
+
+\clearpage 
+
+## Converts to Latex in the Intermediate Step
+
+```
+
+\section{Section Heading}
+
+This is normal text in a paragraph. This text is \textbf{bold}, and this text is in \emph{italics}.
+
+\subsection{Subsection Heading}
+
+Here is more text. Let's also make a list: 
+
+\begin{itemize}
+  \item First item
+  \item Second item
+\end{itemize}
+
+This time let's make the list numbered instead of bullet points:
+
+\begin{enumerate}
+  \item First item
+  \item Second item
+\end{enumerate}
+
+The best use of \LaTeX{} is for math. We can make really fancy equations, that center on the
+page with: 
+
+\begin{equation}
+		\hat{\beta_1}=\frac{\displaystyle\sum^n_{i=1}(X_i-\bar{X})(Y_i-\bar{Y})}
+		{\displaystyle\sum^n_{i=1}(X_i-\bar{X})^2}
+\end{equation}
+
+We can also put math into the same line as text with dollar signs $\frac{2}{3} \times \pi^2$. 
+
+Latex also is useful for creating tables and figures, both are called "float" environments
+that must be initiated with a "\\begin{floattype}" and ended with a "\\end{floattype}", e.g.: 
+
+\begin{table}[h!] % h! places the table here in the doc, instead of where latex optimizes the location
+  \centering % you often want your table in the center of the document
+  \begin{tabular}{lcr} %to create three columns, the first left-aligned (l), the second center-aligned (c), the third right aligned (r)\\ % all lines must end with \\
+  Left & Center & Right \\ \hline % hline creates a horizontal line 
+  Example 1 & Example 2 & Example 3\\
+  44 & 66 & 88 \\ \hline 
+  \end{tabular}
+\end{table}
+
+```
+
+\clearpage 
+
+# Final Product
+
+# Section Heading   
+
+This is normal text in a paragraph. This text is \textbf{bold}, and this text is in \emph{italics}. 
+
+## Subsection Heading
+
+Here is more text. Let's also make a list: 
+
+\begin{itemize}
+  \item First item
+  \item Second item
+\end{itemize}
+
+This time let's make the list numbered instead of bullet points:
+
+\begin{enumerate}
+  \item First item
+  \item Second item
+\end{enumerate}
+
+The best use of \LaTeX{} is for math. We can make really fancy equations, that center on the page with: 
+
+\begin{equation}
+		\hat{\beta_1}=\frac{\displaystyle\sum^n_{i=1}(X_i-\bar{X})(Y_i-\bar{Y})}{\displaystyle\sum^n_{i=1}(X_i-\bar{X})^2}
+\end{equation}
+
+We can also put math into the same line as text with dollar signs $\frac{2}{3} \times \pi^2$. 
+
+Latex also is useful for creating tables and figures, both are called "float" environments that must be initiated with a "\\begin{floattype}" and ended with a "\\end{floattype}", e.g.: 
+
+\begin{table}[h!] % h! places the table here in the doc, instead of where latex optimizes the location
+  \centering % you often want your table in the center of the document
+  \begin{tabular}{lcr} %to create three columns, the first left-aligned (l), the second center-aligned (c), the third right aligned (r)\\ % all lines must end with \\
+  Left & Center & Right \\ \hline % hline creates a horizontal line 
+  Ex 1 & Ex 2 & Ex 3\\
+  44 & 66 & 88 \\ \hline 
+  \end{tabular}
+\end{table}
