@@ -11,6 +11,7 @@
 
 <meta name="author" content="Ryan Safner" />
 
+<meta name="date" content="2018-10-22" />
 
 <title>Rmd Practice</title>
 
@@ -120,22 +121,65 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Rmd Practice</h1>
 <h4 class="author"><em>Ryan Safner</em></h4>
+<h4 class="date"><em>October 22, 2018</em></h4>
 
 </div>
 
 
-<p>This is an <code>Rmd</code> notebook. Notice the syntax highlighting shows when you modify text or insert code, for example: <strong>bold</strong>, <em>italic</em>, and <code>code</code>. Edit the <code>YAML</code> header (above the <code>---</code>) to change the metadata like the <code>title</code>, <code>author</code>, and <code>date</code> to suit your purposes.</p>
+<p>This is an <code>Rmd</code> file. Notice the syntax highlighting shows when you modify text or insert code, for example: <strong>bold</strong>, <em>italic</em>, and <code>code</code>. Edit the <code>YAML</code> header (above the <code>---</code>) to change the metadata like the <code>title</code>, <code>author</code>, and <code>date</code> to suit your purposes.</p>
+<p>See my <a href="http://ryansafner.com/tutorial/RMDG">R Markdown Guide</a> for more about <code>R Markdown</code>, and my <a href="http://ryansafner.com/tutorial/R4EH">R for Econometrics Guide</a> for more on <code>R</code> commands for assistance. Look at both the <code>html</code> output of this guide and the raw <code>.Rmd</code> (which I expect you to edit), both are available on Blackboard and <a href="http://github.com/ryansafner/RMDG">GitHub</a>.</p>
+<p>When you are ready, <code>knit</code> to <code>html</code> by clicking the <strong>Knit</strong> button at the top of the editor and it will compile the plain text and raw code into a lovely webpage. You should be able to knit to <code>html</code> right away (install packages if requested), but to knit to <code>pdf</code>, your computer first needs a <span class="math inline">\(\LaTeX{}\)</span> distribution in order to properly render a <code>pdf</code> via <code>tex</code>. So first, download from <a href="http://miktex.org/download">MikTeX</a>.</p>
+<div id="working-with-r-markdown-text-and-syntax" class="section level1">
+<h1>Working with <code>R Markdown</code> Text and Syntax</h1>
+<p>Go through this <a href="https://www.markdowntutorial.com/">quick tutorial</a> to practice the different syntax options for marking up text.</p>
+<p>Now let’s try some other nice features of using <code>R Markdown</code>, beyind just running chunks of <code>R</code> code. This will also show you how you can use this as a way of working on other papers or projects, even if they do not need <code>R</code> or data analysis.</p>
+<div id="adding-a-bibliography-and-some-citations" class="section level2">
+<h2>Adding a bibliography and some citations</h2>
+<p>Create a new file <code>File -&gt; New File -&gt; Text File</code>. In principle, you could do this in any program, like Windows’ default <code>Notepad.</code> I recommend trying out <a href="https://bibdesk.sourceforge.io/">Bibdesk</a>. In any case, save this file as something, and make sure to end the name with <code>.bib</code>. Save it in the same folder on your computer as this <code>.Rmd</code> file.</p>
+<p>Next, go to the <code>YAML</code> header at top of <em>this</em> document (between the <code>---</code>’s). Add a new line with <code>bibliography: mybibname.bib</code>, where <code>mybibname</code> is the name you gave to the new file. This tells <code>R Markdown</code> to pull citations from your <code>.bib</code> file, which must be in the same folder on your computer.</p>
+<p>In the <code>.bib</code> file, copy/paste the following code:</p>
+<pre><code>@article{citekey1,
+  author= {},
+  year = {},
+  title = {},
+  journal = {},
+  volume = {},
+  number = {},
+  pages = {}
+}
+
+@book{citekey2,
+  author= {},
+  year = {},
+  title = {},
+  publisher = {},
+  address = {},
+}</code></pre>
+<p>The first entry is an example entry for a journal article, and the second is for a book. Edit the content inside each <code>{}</code> with an example (feel free to make them up, as practice). Be sure to edit the <code>citekey1</code> and <code>citekey2</code> to something you will remember (I often do it as <code>authornameyear</code>), because these are what you type any time you want to include a citation to them. Edit in your citekeys below:</p>
+</div>
+<div id="example-citations" class="section level2">
+<h2>Example Citations:</h2>
+<blockquote>
+<p>“Here is an example quote from this article.” <span class="citation">Smith and Jones (2018, 2)</span></p>
+</blockquote>
+<p><span class="citation">Doe, Gibberish, and Fakerson (2016, 12)</span> says “this short quote”, disagreeing with <span class="citation">Smith and Jones (2018)</span>.</p>
+<p>See also the references appear at the end of the document now (we just need to add a <code># References</code> or <code># Bibliography</code> at the end of the file to create a section for them). It lists all the references you cited in alphabetical order. You can <a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">learn more</a> about how to customize the format of the bibliography.</p>
+</div>
+</div>
+<div id="data-and-r-chunks" class="section level1">
+<h1>Data and <code>R</code> Chunks</h1>
+<p>Here is a good place to continue practicing the data analysis we’ve been learning (importing data, making plots, regressions, tables, etc) and see the benefits of running <code>R</code> in chunks in a <code>R Markdown</code> document. Consider the remainder of this document just like the other <strong>R Practice Problems</strong> we’ve been doing in class, except now you understand how to do them right in the original file with my questions!</p>
 <p>For each question, insert your answers between the triple asterisks <code>***</code> that create horizontal lines separating my questions from your answers. Remember, you can insert <code>R</code> chunks with the following format:</p>
 <pre class="r"><code># your code goes here </code></pre>
-<p>Notice in the <code>.Rmd</code> file you can run just that “chunk” of code with the green play button. You can run all previous chunks in with the middle button. There are options you can set on each chunk, but they’re not very important now.</p>
-<p>When you are ready, <code>knit</code> to <code>html</code> by clicking the <strong>Knit</strong> button at the top of the editor and it will compile the plain text and raw code into a lovely webpage.</p>
-<div id="data" class="section level1">
-<h1>Data</h1>
+<p>It’s easiest to use the <strong>keyboard shortcut</strong> <code>CTRL+ALT+I</code> (on Windows) <code>CMD+Option+I</code> (on Mac) to automatically create a blank <code>R</code> chunk for you.</p>
+<p>Notice in the <code>.Rmd</code> file you can run just that “chunk” of code with the green play button. You can run all previous chunks in with the middle button. You can name your chunk and there are options you can set on each chunk, but they’re not important yet.</p>
+<p>On to the questions:</p>
 <div id="load-the-econfreedom-dataset-from-blackboard-rightarrow-data." class="section level3">
 <h3>1. Load the <code>econfreedom</code> dataset from Blackboard <span class="math inline">\(\rightarrow\)</span> data.</h3>
 <p>This is data I downloaded and cleaned up from the <a href="https://www.fraserinstitute.org/economic-freedom/dataset">Fraser Institute’s Economic Freedom Index</a> and the <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">World Bank’s World Development Indicators</a>, both great datasets. This data is in <code>.csv</code> format, so you can just download it somewhere and tell <code>R</code> to load it from the downloaded location with <code>df&lt;-read.csv(&quot;/path/to/file.csv&quot;)</code> and save it to some dataframe object.</p>
 <p><code>ef</code> is a country’s (2014) overall Economic Freedom Index score from 0 (least free)-10 (most free). <code>gdp</code> is the country’s (2014) GDP per capita in USD.</p>
 <hr />
+<p><strong>YOUR ANSWER HERE, BETWEEN THE THREE ASTERISKS</strong></p>
 <hr />
 </div>
 <div id="look-at-the-structure-of-the-dataframe-and-print-the-first-few-rows." class="section level3">
@@ -158,7 +202,7 @@ $(document).ready(function () {
 </div>
 <div id="load-ggplot2-and-make-a-histogram-of-ef-and-of-gdp." class="section level3">
 <h3>5. Load <code>ggplot2</code> and make a histogram of <code>ef</code> and of <code>gdp</code>.</h3>
-<p>Try changing the chunk options to modify <code>fig.height</code> and <code>fig.width</code>.</p>
+<p>Try changing the <code>R</code> chunk options to modify <code>fig.height</code> and <code>fig.width</code>.</p>
 <hr />
 <hr />
 </div>
@@ -167,10 +211,20 @@ $(document).ready(function () {
 <hr />
 <hr />
 </div>
-<div id="now-lets-consider-the-possible-association-between-economic-freedom-x-and-gdp-per-capita-y.-plot-two-scatterplots-one-of-all-the-data-points-and-one-by-continent-try-coloring-by-conteninent-and-then-try-by-faceting." class="section level3">
-<h3>7. Now let’s consider the possible association between economic freedom (<span class="math inline">\(X\)</span>) and GDP per capita (<span class="math inline">\(Y\)</span>). Plot two scatterplots: one of all the data points, and one by continent (try coloring by conteninent, and then try by faceting).</h3>
+<div id="now-lets-consider-the-possible-association-between-economic-freedom-x-and-gdp-per-capita-y.-plot-a-scatterplot-of-the-two." class="section level3">
+<h3>7. Now let’s consider the possible association between economic freedom (<span class="math inline">\(X\)</span>) and GDP per capita (<span class="math inline">\(Y\)</span>). Plot a scatterplot of the two.</h3>
 <hr />
 <hr />
+<div id="a.-now-re-plot-scatterplot-by-continent.-in-the-base-layer-add-colorcontinent-to-the-aesthetics." class="section level4">
+<h4>a. Now re-plot scatterplot by continent. In the base layer, add <code>color=continent</code> to the aesthetics.</h4>
+<hr />
+<hr />
+</div>
+<div id="b.-alternatively-we-could-make-separate-plots-for-each-continent-by-faceting.-add-to-your-original-plot-facet_gridcolsvarscontinent." class="section level4">
+<h4>b. Alternatively, we could make separate plots for each continent by <code>facet</code>ing. Add to your original plot <code>+facet_grid(cols=vars(continent))</code>.</h4>
+<hr />
+<hr />
+</div>
 </div>
 <div id="now-lets-start-considering-whether-higher-economic-freedom-causes-higher-gdp-per-capita-with-the-following-simple-model" class="section level3">
 <h3>8. Now let’s start considering whether higher economic freedom causes higher GDP per capita with the following simple model:</h3>
@@ -198,15 +252,29 @@ $(document).ready(function () {
 <hr />
 <hr />
 </div>
-<div id="europe-seems-to-have-the-greatest-variation.-subset-your-data-to-look-only-at-europe.-make-a-scatterplot-and-run-a-regression." class="section level3">
-<h3>11. Europe seems to have the greatest variation. Subset your data to look only at Europe. Make a scatterplot and run a regression.</h3>
+<div id="europe-seems-to-have-the-greatest-variation.-subset-your-data-to-look-only-at-europe.-make-a-histogram-of-gdp-make-a-scatterplot-like-in-7-and-run-a-regression-all-only-for-european-countries." class="section level3">
+<h3>11. Europe seems to have the greatest variation. Subset your data to look only at Europe. Make a histogram of GDP, make a scatterplot like in #7, and run a regression, all only for European countries.</h3>
 <hr />
 <hr />
 </div>
-<div id="create-a-new-regression-table-with-both-of-your-regressions." class="section level3">
-<h3>12. Create a new regression table with both of your regressions.</h3>
+<div id="run-similar-regresions-with-only-americas-asia-africa-and-oceania-and-then-finally-print-a-regression-table-with-stargazer-with-all-of-your-models.-practice-labelling-the-columns-each-individual-regression-by-adding-the-options-column.labels-call-europe-americas-asia-africa-oceania.-learn-more-about-customizing-stargazer-with-this-cheatsheet." class="section level3">
+<h3>12. Run similar regresions with only “Americas”, “Asia”, “Africa”, and “Oceania”, and then finally, print a regression table with <code>stargazer</code> with all of your models. Practice labelling the columns (each individual regression) by adding the options, <code>column.labels = c(&quot;All&quot;, &quot;Europe&quot;, &quot;Americas&quot;, &quot;Asia&quot;, &quot;Africa&quot;, &quot;Oceania&quot;)</code>. Learn more about customizing <code>stargazer</code> with this <a href="https://www.jakeruss.com/cheatsheets/stargazer">cheatsheet</a>.</h3>
 <hr />
 <hr />
+<p>Sometimes we don’t want to show the code along with our results. In the chunk below, change the options to <code>{r, echo=FALSE}</code>. <code>echo</code> asks (logically, <code>TRUE</code> or <code>FALSE</code>) if you want to also print the raw input code along with <code>R</code>’s output.</p>
+<pre><code>## [1] 4</code></pre>
+<p>To change <strong>all</strong> chunks to not print the raw input codes, go to the very first chunk called <code>setup</code> at the top. <code>R</code> will always run this chunk first, and it can be used to set default options for <em>all</em> successive chunks. Edit it to say <code>knitr::opts_chunk$set(echo = FALSE)</code>. This is particularly helpful if you are writing an paper in a single <code>.Rmd</code> file and don’t want any code in the final version.</p>
+</div>
+</div>
+<div id="bibliography" class="section level1 unnumbered">
+<h1>Bibliography</h1>
+<div id="refs" class="references">
+<div id="ref-citekey2">
+<p>Doe, John, Erica Gibberish, and Frank Fakerson. 2016. <em>How Did This Get Published?</em> New York, NY: Sketchy Publishing, Inc.</p>
+</div>
+<div id="ref-citekey1">
+<p>Smith, Robert, and Anne Jones. 2018. “A Test Article.” <em>Fake Articles Quarterly</em> 12 (2): 1–21.</p>
+</div>
 </div>
 </div>
 

@@ -26,11 +26,13 @@ theme_update(panel.background = element_rect(fill = "transparent", colour = NA),
 knitr::opts_chunk$set(dev.args=list(bg="transparent"))
 ```
 
-**Note to Students**: This guide is available on [my website](http://ryansafner.com/tutorial/RMDG.html), which Blackboard will link to. The source files are also available [on GitHub](http://github.com/ryansafner/RMDG)
+**Note to Students**: This guide is available on [my website](http://ryansafner.com/tutorial/RMDG), which Blackboard will link to. The source files are also available [on GitHub](http://github.com/ryansafner/RMDG)
 
 **Note to Everyone Else**: This guide is oriented primarily for my [Econometrics class](http://ryansafner.com/courses/econ480) at Hood College, but should be of wider use to anyone interested in learning `R` for data analysis. Lecture slides, handouts, and guides (both PDFs and source code in R Markdown) are openly available [on GitHub](http://github.com/ryansafner/ECON480/).
 
-**See also my companion guide to using R** hosted on [my website](http://ryansafner.com/tutorial/R4EH.html), with source available also [on GitHub](http://github.com/ryansafner/R4EH)
+**See also my companion guide to using R** hosted on [my website](http://ryansafner.com/tutorial/R4EH), with source available also [on GitHub](http://github.com/ryansafner/R4EH)
+
+The document you are currently reading was written in `R Markdown` (see the file on GitHub) `knit`ted to `html`. 
 
 # Manage Your Workflow
 
@@ -49,28 +51,28 @@ knitr::opts_chunk$set(dev.args=list(bg="transparent"))
 
 ![The Office Model](images/msofficemodel.png)
 
-1. Writing Text
+1. **Writing Text**
     - Done in Word, the "realest" part of your workflow 
-2. Managing citations and bibliography 
+2. **Managing citations and bibliography** 
     - Often done by hand in Word, perhaps a reference manager plugin
-3. Performing data analysis 
+3. **Performing data analysis**
     - Done in Excel (possibly Stata/SAS/R), then copy/pasted into Word
-4. Making figures and tables 
+4. **Making figures and tables**
     - Done in Excel (possibly Stata/SAS/R), then copy/pasted into Word
-5. Save files for future use
+5. **Save files for future use**
     - Save Word .docx, Excel .xlsx, etc. 
-6. Monitor changes in documents
+6. **Monitor changes in documents**
     - Track changes inside Word file
-7. Collaborate and share files with coauthors
+7. **Collaborate and share files with coauthors**
     - Email Word .docx to collaborators, they email back different files, merging, resolving conflicts, etc.
         - `paper.docx`, `paper2.docx`, `paper2comments.docx`, `paper2edits.docx`, `paperfinal?.docx`, etc.
     - Google Docs a vast improvement but at cost of word processing sophistication
-- Combine all elements into single document for presentation
+8. **Combine all elements into single document for presentation**
     - Copy/paste everything into Word
     - Possibly export as a PDF 
     - Possibly make additional slides in Powerpoint
 
-https://www.youtube.com/watch?v=s3JldKoA0zw
+[**Watch This Short Horror Movie** about problems you didn't realize you have](https://www.youtube.com/watch?v=s3JldKoA0zw)
 
 ### The Problem with WYSIWYG 
 
@@ -94,7 +96,7 @@ https://www.youtube.com/watch?v=s3JldKoA0zw
 
 # The Alternative: Plain Text Files + Automation 
 
-- Why not have a single program and file to accomplish the following? 
+- Why not have a *single* program and file to accomplish the following? 
 
 1. Writing Text
 2. Managing citations and bibliography
@@ -110,7 +112,7 @@ Meet `R Markdown`, a **plain-text** file that weave together all 8 elements in a
 
 ![](images/rmd.png)
 
-![From \href{https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf}{R Markdown Cheatsheet}](images/rmd2.png)
+![From [R Studio's R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)](images/rmd2.png)
 
 ## Plain Text Files
 
@@ -137,7 +139,7 @@ Where does your analysis "live"?
 - Now your `R Markdown` `.Rmd` file is the "real" part of your analysis, *everything* can live in this file 
     - Often called **notebooks**: allows you to insert **chunks** of `R` code that you can run individually
         - Open source code notebooks are the future of science! See [The Atlantic article](https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/) and [Paul Romer's comments](https://paulromer.net/jupyter-mathematica-and-the-future-of-the-research-paper/?fbclid=IwAR12yWdZxT07qGGqfcxrsZzeCLK6f5EB0sslYXK1GZHpVCZm_h-4rTiHwSg)
-    - `CTRL` (`Cmd` on Mac)`+Option+I` creates a new chunk (see below)
+    - `CTRL` (`Cmd` on Mac)`+Option+I` creates a new chunk (see [section on R chinks below](#chunks))
 - You download and run my code and you will get the same outcome as me, *every time* 
 
 # Creating an `R Markdown` Document
@@ -182,7 +184,7 @@ Where does your analysis "live"?
 
 [](images/yamlex1)
 
-### R Chunks
+### R Chunks{#chunks}
 
 - You can create a "chunk" of `R` code with three backticks (the key next to \#1 key) above and below your code
     - After the first pair of apostrophes, signify you want to use `R` with `{r}` 
@@ -202,7 +204,7 @@ sd(x)
 
 if I then type "r sd(x)" in backticks, it will print `r sd(x)` in my text. 
 
-### Markdown Language and Syntax 
+### Markdown Language and Syntax{#syntax}
 
 - [Markdown](https://en.wikipedia.org/wiki/Markdown) is a lightweight markup language geared towards HTML (i.e. the internet)
     - [Markup languages](https://en.wikipedia.org/wiki/Markup_language) used to add commands about how to display plain text
@@ -272,8 +274,9 @@ Creates
 
 $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\displaystyle \sum_{i=1}^n (X_i-\bar{X})^2}$$
 
-- Math uses a (much older) language called $\LaTeX{}$, used by mathematicians, economists, and others to write papers and slides with perfect math and formatting
+- Math uses a (much older) language called [$\LaTeX{}$](http://en.wikipedia.org/wiki/LaTeX), used by mathematicians, economists, and others to write papers and slides with perfect math and formatting
     - I used to use for everything before I found `R` and `markdown` 
+    - Producing `pdf` or `html` output actually converts `markdown` files into $\TeX{}$ first! (See [the process described below](#process))
     - Much steeper learning curve, [a good cheatsheet](https://wch.github.io/latexsheet/latexsheet.pdf)
     - An extensive library of mathematical symbols, notation, formats, and ligatures, e.g.
 
@@ -290,6 +293,7 @@ $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\di
 | `$A=\begin{bmatrix} a_{1,1} & a_{1,2} \\ a_{2,1} & a_{2,2} \\ \end{bmatrix}$` | $A=\begin{bmatrix} a_{1,1} & a_{1,2} \\ a_{2,1} & a_{2,2} \\ \end{bmatrix}$ | 
 
 - A great resource: [Wikibooks LaTeX Mathematics chapter](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
+- And for more about $\LaTeX{}$ in general: [Wikibooks LaTeX](https://en.wikibooks.org/wiki/LaTeX/)
 
 ### Citations, References, and Bibliography
 
@@ -314,14 +318,14 @@ $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\di
 - Can do the same for `@article`, `@book`, `@collectedwork`, `@unpublished`, etc. 
     - Each will have different keys needed (e.g. `editor`, `publisher`, `address`)
     - The first term after the `{` is your **citation key** (e.g. `safner2016`)
-- Whenever you want to cite a work in your text, call up the citation key with `@`, like so: `@safner2016[]`, which produces @safner2016[]
+- Whenever you want to cite a work in your text, call up the **citation key** with `@`, like so: `@safner2016[]`, which produces @safner2016[]
     - You can customize citations, e.g.:
-        - All in parentheses: `@[safner2016]` produces @[safner2016]
-        - No parentheses: `@safner2016` produces @safner2016
-        - Date only: `[-@safner2016]` produces [-@safner2016]
-        - Adding pages or comments: `@safner2016[743-744 and passim]` produces @safner2016[743-744 and passim]
+        - **All in parentheses**: `[@safner2016]` produces [@safner2016]
+        - **No parentheses**: `@safner2016` produces @safner2016
+        - **Date only**: `[-@safner2016]` produces [-@safner2016]
+        - **Adding pages or comments**: `@safner2016[p.743-744 and passim]` produces @safner2016[p.743-744 and passim]
 - BibTeX will automatically collect all works cited at the end and produce a **bibliography** according to a style you can choose
-    - See the \textbf{References} automatically produced at the end of this document 
+    - See the [References section](#references) automatically produced at the end of this document! 
 - For more information and examples, see [R Studio's R Markdown Guide on Bibliographies](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
 - Lot of programs can help you manage references and export complete `.bib` files to use with `R Markdown`
     - [Mendeley](https://www.mendeley.com) and [Zotero](https://www.zotero.org/) are free and cross-platform
@@ -332,12 +336,12 @@ $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\di
 
 - Markdown files are [**plain text**](https://en.wikipedia.org/wiki/Plain_text) files and can be edited in *any* text editor
     - something as basic (and boring!) as "**Notepad**," for example
-    - many good [text editors](https://en.wikipedia.org/wiki/Text_editor) out there: [Notepad++](https://notepad-plus-plus.org/), [Sublime](https://www.sublimetext.com/), etc. 
-    - `R Studio` is a great plain text editor too (I write everything in `R Studio`)
+    - many good [text editors](https://en.wikipedia.org/wiki/Text_editor) out there: [Notepad++](https://notepad-plus-plus.org/), [Sublime](https://www.sublimetext.com/), see below image of each: 
+
+![Notepad++](images/notepad++.png){width=4.25in} ![Sublime](images/sublime.png){width=4.125in}
+
+- `R Studio` is a great plain text editor too (I write everything in `R Studio`)
         - Can make any file type via File -> New File -> Text File (and add your own file extension type when saving)
-
-![Notepad++](images/notepad++.png){width=4.5in} ![Sublime](images/sublime.png){width=4.5in}
-
 - Any good text editor worth its salt should have *syntax highlighting*, coloring text that is styled (e.g. **bold**, *italic*, comments, `R code`, etc) differently from plain text (so you can spot it easily!)
 
 ### Syntax Tips
@@ -348,7 +352,7 @@ $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\di
 - Here is a [great general tutorial on markdown syntax](https://www.markdowntutorial.com/)
 
 
-### Compiling Your Output with `knitr` 
+### Compiling Your Output with `knitr`{#process}
 
 - When you are ready, you will want to export your `R Markdown .Rmd` document with raw code to a conventional document format (e.g. `.pdf`, `.docx`, `html`)
 - You do this by `knit`ing your code with `knitr` and `pandoc`
@@ -361,12 +365,13 @@ $$\hat{\beta_1}=\frac{\displaystyle \sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\di
 
 ![](images/pandocprocess.png)
 
-- `knit`ing to pdf files requires a TeX distribution (remember we talked about LaTeX for math) to be installed on your computer
+- `knit`ing to usual output files requires a [$\TeX$ distribution](http://miktex.org/download) (remember we talked about [$\LaTeX$ for math](#syntax)) to be installed on your computer
     - this utility actually is what "compiles" your code (transformed into a `.tex` file by `knitr`) into a PDF document
+    - See the []()
     - you must first download and install a TeX distribution, such as [MikTeX](https://miktex.org/download)
     - **Note for Trading Room Computers**: I have found the following method to work: 
 ```{r, eval=FALSE}
-# First we need To install tex (MikTex for Windows)
+# First we need To install tex from http://miktex.org
 
 # Second we need to install devtools in R
 install.packages("devtools")
@@ -396,4 +401,4 @@ Resources to read in rough order of importance and level of sophistication (most
 6. Hadley Wickham's (and Garrett Grolemund) [R for Data Science](http://r4ds.had.co.nz/) on how to use R and R Markdown for data science work
 7. Jenny Bryan's [Happy Git with R](http://happygitwithr.com/) on how to use git and GitHub with R as a version control system
 
-# References 
+# References{#references}
