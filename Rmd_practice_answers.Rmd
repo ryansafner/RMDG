@@ -1,23 +1,81 @@
 ---
 title: "Rmd Practice (Answers)"
 author: "Ryan Safner"
-date: ""
+date: "October 22, 2018"
 output: html_document
+bibliography: mybibname.bib
 ---
 
-This is an `Rmd` notebook. Notice the syntax highlighting shows when you modify text or insert code, for example: **bold**, *italic*, and `code`. Edit the `YAML` header (above the `---`) to change the metadata like the `title`, `author`, and `date` to suit your purposes. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is an `Rmd` file. Notice the syntax highlighting shows when you modify text or insert code, for example: **bold**, *italic*, and `code`. Edit the `YAML` header (above the `---`) to change the metadata like the `title`, `author`, and `date` to suit your purposes. 
+
+See my [R Markdown Guide](http://ryansafner.com/tutorial/RMDG) for more about `R Markdown`, and my [R for Econometrics Guide](http://ryansafner.com/tutorial/R4EH) for more on `R` commands for assistance. Look at both the `html` output of this guide and the raw `.Rmd` (which I expect you to edit), both are available on Blackboard and [GitHub](http://github.com/ryansafner/RMDG). 
+
+When you are ready, `knit` to `html` by clicking the **Knit** button at the top of the editor and it will compile the plain text and raw code into a lovely webpage. You should be able to knit to `html` right away (install packages if requested), but to knit to `pdf`, your computer first needs a $\LaTeX{}$ distribution in order to properly render a `pdf` via `tex`. So first, download from [MikTeX](http://miktex.org/download).
+
+# Working with `R Markdown` Text and Syntax
+
+Go through this [quick tutorial](https://www.markdowntutorial.com/) to practice the different syntax options for marking up text. 
+
+Now let's try some other nice features of using `R Markdown`, beyind just running chunks of `R` code. This will also show you how you can use this as a way of working on other papers or projects, even if they do not need `R` or data analysis. 
+
+## Adding a bibliography and some citations
+
+Create a new file `File -> New File -> Text File`. In principle, you could do this in any program, like Windows' default `Notepad.` I recommend trying out [Bibdesk](https://bibdesk.sourceforge.io/). In any case, save this file as something, and make sure to end the name with `.bib`. Save it in the same folder on your computer as this `.Rmd` file. 
+
+Next, go to the `YAML` header at top of *this* document (between the `---`'s). Add a new line with `bibliography: mybibname.bib`, where `mybibname` is the name you gave to the new file. This tells `R Markdown` to pull citations from your `.bib` file, which must be in the same folder on your computer. 
+
+In the `.bib` file, copy/paste the following code:
+
+```
+@article{citekey1,
+  author= {},
+  year = {},
+  title = {},
+  journal = {},
+  volume = {},
+  number = {},
+  pages = {}
+}
+
+@book{citekey2,
+  author= {},
+  year = {},
+  title = {},
+  publisher = {},
+  address = {},
+}
+```
+
+The first entry is an example entry for a journal article, and the second is for a book. Edit the content inside each `{}` with an example (feel free to make them up, as practice). Be sure to edit the `citekey1` and `citekey2` to something you will remember (I often do it as `authornameyear`), because these are what you type any time you want to include a citation to them. Edit in your citekeys below: 
+
+## Example Citations:
+
+> "Here is an example quote from this article." @citekey1[p.2]
+
+@citekey2[p.12] says "this short quote", disagreeing with @citekey1[].
+
+See also the references appear at the end of the document now (we just need to add a `# References` or `# Bibliography` at the end of the file to create a section for them). It lists all the references you cited in alphabetical order. You can [learn more](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) about how to customize the format of the bibliography.
+
+# Data and `R` Chunks
+
+Here is a good place to continue practicing the data analysis we've been learning (importing data, making plots, regressions, tables, etc) and see the benefits of running `R` in chunks in a `R Markdown` document. Consider the remainder of this document just like the other **R Practice Problems** we've been doing in class, except now you understand how to do them right in the original file with my questions! 
 
 For each question, insert your answers between the triple asterisks `***` that create horizontal lines separating my questions from your answers. Remember, you can insert `R` chunks with the following format:
 
-```{r}
+```{r chunk-name, options}
 # your code goes here 
 ```
 
-Notice in the `.Rmd` file you can run just that "chunk" of code with the green play button. You can run all previous chunks in with the middle button. There are options you can set on each chunk, but they're not very important now. 
+It's easiest to use the **keyboard shortcut** `CTRL+ALT+I` (on Windows) `CMD+Option+I` (on Mac) to automatically create a blank `R` chunk for you. 
 
-When you are ready, `knit` to `html` by clicking the **Knit** button at the top of the editor and it will compile the plain text and raw code into a lovely webpage.  
+Notice in the `.Rmd` file you can run just that "chunk" of code with the green play button. You can run all previous chunks in with the middle button. You can name your chunk and there are options you can set on each chunk, but they're not important yet.
 
-# Data 
+On to the questions: 
 
 ### 1. Load the `econfreedom` dataset from Blackboard $\rightarrow$ data. 
 
@@ -74,7 +132,7 @@ stargazer(econfreedom, type="html")
 
 ### 5. Load `ggplot2` and make a histogram of `ef` and of `gdp`. 
 
-Try changing the chunk options to modify `fig.height` and `fig.width`. 
+Try changing the `R` chunk options to modify `fig.height` and `fig.width`. 
 
 ***
 
@@ -99,6 +157,8 @@ gdp.hist
 
 ### 6. Now make a boxplot of `ef` and of `gdp` by `continent`. 
 
+***
+
 ```{r}
 ef.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=ef,fill=continent))+
   geom_boxplot()+
@@ -116,7 +176,9 @@ gdp.hist.cont<-ggplot(data=econfreedom, aes(x=continent,y=gdp,fill=continent))+
 gdp.hist.cont
 ```
 
-### 7. Now let's consider the possible association between economic freedom ($X$) and GDP per capita ($Y$). Plot two scatterplots: one of all the data points, and one by continent (try coloring by conteninent, and then try by faceting). 
+***
+
+### 7. Now let's consider the possible association between economic freedom ($X$) and GDP per capita ($Y$). Plot a scatterplot of the two. 
 
 ***
 
@@ -129,6 +191,12 @@ scatter<-ggplot(data=econfreedom,aes(x=ef,y=gdp))+
 scatter 
 ```
 
+***
+
+#### a. Now re-plot scatterplot by continent. In the base layer, add `color=continent` to the aesthetics. 
+
+***
+
 ```{r}
 scatter.cont<-ggplot(data=econfreedom,aes(x=ef,y=gdp, color=continent))+
   geom_point()+
@@ -137,6 +205,12 @@ scatter.cont<-ggplot(data=econfreedom,aes(x=ef,y=gdp, color=continent))+
   ylab("GDP Per Capita")+theme_light()
 scatter.cont 
 ```
+
+***
+
+#### b. Alternatively, we could make separate plots for each continent by `facet`ing. Add to your original plot `+facet_grid(cols=vars(continent))`.  
+
+***
 
 ```{r}
 scatter.facet<-scatter.cont+facet_grid(cols=vars(continent))
@@ -219,14 +293,23 @@ stargazer(reg, type="html")
 
 ***
 
-### 11. Europe seems to have the greatest variation. Subset your data to look only at Europe. Make a scatterplot and run a regression. 
+### 11. Europe seems to have the greatest variation. Subset your data to look only at Europe. Make a histogram of GDP, make a scatterplot like in #7, and run a regression, all only for European countries. 
 
 ***
 
 ```{r}
 europe<-subset(econfreedom,continent=="Europe")
+```
 
-euroscatter<-ggplot(data=econfreedom,aes(x=ef,y=gdp))+
+```{r}
+euro.hist<-ggplot(data=europe, aes(x=gdp))+
+  geom_histogram(breaks=seq(0,100000,10000),color="black",fill="indianred")+
+  scale_x_continuous(breaks=seq(0,100000,10000),labels=scales::dollar)+xlab("Economic Freedom Index Score")+ylab("Number of Countries")+theme_fivethirtyeight()
+euro.hist
+```
+
+```{r}
+euroscatter<-ggplot(data=europe,aes(x=ef,y=gdp))+
   geom_point()+
   scale_x_continuous(breaks=seq(0,10,1))+xlab("Economic Freedom Score")+
   scale_y_continuous(breaks=seq(0,100000,20000),labels=scales::dollar)+
@@ -241,11 +324,43 @@ summary(eureg)
 
 ***
 
-### 12. Create a new regression table with both of your regressions.  
+### 12. Run similar regresions with only "Americas", "Asia", "Africa", and "Oceania", and then finally, print a regression table with `stargazer` with all of your models. Practice labelling the columns (each individual regression) by adding the options, `column.labels = c("All", "Europe", "Americas", "Asia", "Africa", "Oceania")`. Learn more about customizing `stargazer` with this [cheatsheet](https://www.jakeruss.com/cheatsheets/stargazer). 
 
 ***
+
+```{r}
+americas<-subset(econfreedom,continent=="Americas")
+
+americareg<-lm(gdp~ef,data=americas)
+summary(americareg)
+```
+
+```{r}
+asia<-subset(econfreedom,continent=="Asia")
+asiareg<-lm(gdp~ef,data=asia)
+summary(asiareg)
+```
+
+
+```{r}
+africa<-subset(econfreedom,continent=="Africa")
+africareg<-lm(gdp~ef,data=africa)
+summary(africareg)
+```
+
 ```{r, results="asis"}
-stargazer(reg,eureg, type="html")
+stargazer(reg,eureg,americareg,asiareg,africareg, column.labels = c("All", "Europe", "Americas", "Asia", "Africa", "Oceania"), type="html")
 ```
 
 ***
+
+Sometimes we don't want to show the code along with our results. In the chunk below, change the options to `{r, echo=FALSE}`. `echo` asks (logically, `TRUE` or `FALSE`) if you want to also print the raw input code along with `R`'s output.  
+
+```{r,echo=FALSE}
+2+2
+```
+
+To change **all** chunks to not print the raw input codes, go to the very first chunk called `setup` at the top. `R` will always run this chunk first, and it can be used to set default options for *all* successive chunks. Edit it to say `knitr::opts_chunk$set(echo = FALSE)`. This is particularly helpful if you are writing an paper in a single `.Rmd` file and don't want any code in the final version. 
+
+
+# Bibliography

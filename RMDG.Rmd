@@ -32,7 +32,7 @@ knitr::opts_chunk$set(dev.args=list(bg="transparent"))
 
 **See also my companion guide to using R** hosted on [my website](http://ryansafner.com/tutorial/R4EH), with source available also [on GitHub](http://github.com/ryansafner/R4EH)
 
-The document you are currently reading was written in `R Markdown` (see the file on GitHub) `knit`ted to `html`. 
+The document you are currently reading was written in `R Markdown` `knit`ted to `html`. See the full [repository on GitHub](http://github.com/ryansafner/RMDG) for additional files to practice writing with `R Markdown`, explained in the `README`.  
 
 # Manage Your Workflow
 
